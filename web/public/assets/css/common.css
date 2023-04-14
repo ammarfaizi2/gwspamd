@@ -14,8 +14,18 @@ html {
 
 #main-box {
 	text-align: center;
+	margin-bottom: 300px;
 }
 
 button {
 	cursor: pointer;
+}
+
+a {
+	color: blue;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
