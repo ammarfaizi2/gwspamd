@@ -17,6 +17,7 @@ const PDO_PARAM = [
 ];
 
 const JSON_ENCODE_FLAGS = JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+const APP_KEY = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 
 define("API_DIR", __DIR__ . "/api");
 define("PUBLIC_DIR", __DIR__ . "/public");
