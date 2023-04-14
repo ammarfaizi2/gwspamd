@@ -11,3 +11,11 @@ html {
 #navbar {
 	text-align: center;
 }
+
+#main-box {
+	text-align: center;
+}
+
+button {
+	cursor: pointer;
+}

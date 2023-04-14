@@ -138,14 +138,17 @@ function get_user_session(array $extra = []): ?array
 	$pdo = pdo();
 	$st = $pdo->prepare(GET_USER_SESSION_QUERY);
 	$st->execute([(int)$_SESSION["user_id"]]);
-	$row = $st->fetch(PDO::FETCH_ASSOC);
-	if (!$row)
+	$r = $st->fetch(PDO::FETCH_ASSOC);
+	if (!$r)
 		return NULL;
 
-	$row["id"] = (int)$row["id"];
-	$row["full_name"] = $row["first_name"];
-	if (isset($row["last_name"]))
-		$row["full_name"] .= " " . $row["last_name"];
+	$r["id"] = (int)$r["id"];
+	$r["full_name"] = $r["first_name"];
+	if (isset($r["last_name"]))
+		$r["full_name"] .= " " . $r["last_name"];
 
-	return $row;
+	if (isset($r["md5_sum"], $r["sha1_sum"], $r["ext"]))
+		$r["photo"] = bin2hex($r["md5_sum"])."_".$r["sha1_sum"].".".$r["ext"];
+
+	return $r;
 }
