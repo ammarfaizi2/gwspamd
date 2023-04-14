@@ -13,7 +13,7 @@ function api_response(int $code, $data): void
 
 function api_error(int $code, string $msg): void
 {
-	api_response($code, ["error" => $msg]);	
+	api_response($code, ["error" => $msg]);
 }
 
 function handle_api(string $action): int

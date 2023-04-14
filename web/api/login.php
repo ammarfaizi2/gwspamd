@@ -46,6 +46,19 @@ function set_token_cookie(int $type, string $token)
 	setcookie($key, $token, time() + 86400 * 30, "/");
 }
 
+/*
+ * Return 1 if validation failed, otherwise return 0.
+ */
+function validate_password($pass, $row): int
+{
+	if (!$row || !password_verify($pass, $row["password"])) {
+		api_error(401, "Invalid username or password");
+		return 1;
+	}
+
+	return 0;
+}
+
 function handle_api_login_user(): int
 {
 	if (validate_must_have_user_pass())
@@ -63,14 +76,15 @@ function handle_api_login_user(): int
 	$st = $pdo->prepare($q);
 	$st->execute([$user]);
 	$row = $st->fetch(PDO::FETCH_ASSOC);
-	if (!$row || !password_verify($pass, $row["password"])) {
-		api_error(400, "Invalid username or password");
+	if (validate_password($pass, $row))
 		return 1;
-	}
 
+	$row["id"] = (int)$row["id"];
 	$token = generate_token_user($row["id"]);
-	if (isset($_POST["use_cookie"]))
+	if (isset($_POST["use_cookie"]) && $_POST["use_cookie"]) {
 		set_token_cookie(TOKEN_TYPE_USER, $token);
+		$_SESSION["user_id"] = $row["id"];
+	}
 
 	api_response(200, ["token" => $token]);
 	return 0;
@@ -93,15 +107,45 @@ function handle_api_login_admin(): int
 	$st = $pdo->prepare($q);
 	$st->execute([$user]);
 	$row = $st->fetch(PDO::FETCH_ASSOC);
-	if (!$row || !password_verify($pass, $row["password"])) {
-		api_error(400, "Invalid username or password");
+	if (validate_password($pass, $row))
 		return 1;
-	}
 
+	$row["id"] = (int)$row["id"];
 	$token = generate_token_admin($row["id"]);
-	if (isset($_POST["use_cookie"]))
+	if (isset($_POST["use_cookie"]) && $_POST["use_cookie"]) {
 		set_token_cookie(TOKEN_TYPE_ADMIN, $token);
+		$_SESSION["admin_id"] = $row["id"];
+	}
 
 	api_response(200, ["token" => $token]);
 	return 0;
+}
+
+const GET_USER_SESSION_QUERY = <<<SQL
+	SELECT
+		a.id, a.username, a.first_name, a.last_name, a.email,
+		b.sha1_sum, b.md5_sum, b.ext, a.created_at, a.updated_at
+	FROM
+		users AS a LEFT JOIN files AS b ON b.id = a.photo
+	WHERE a.id = ? LIMIT 1;
+SQL;
+
+function get_user_session(array $extra = []): ?array
+{
+	if (!isset($_SESSION["user_id"]))
+		return NULL;
+
+	$pdo = pdo();
+	$st = $pdo->prepare(GET_USER_SESSION_QUERY);
+	$st->execute([(int)$_SESSION["user_id"]]);
+	$row = $st->fetch(PDO::FETCH_ASSOC);
+	if (!$row)
+		return NULL;
+
+	$row["id"] = (int)$row["id"];
+	$row["full_name"] = $row["first_name"];
+	if (isset($row["last_name"]))
+		$row["full_name"] .= " " . $row["last_name"];
+
+	return $row;
 }

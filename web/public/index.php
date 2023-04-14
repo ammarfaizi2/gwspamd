@@ -6,7 +6,7 @@
 
 require __DIR__ . "/../init.php";
 
-if (isset($_SESSION["user"]))
+if (isset($_SESSION["user_id"]))
 	require __DIR__ . "/home.php";
 else
 	require __DIR__ . "/login.php";

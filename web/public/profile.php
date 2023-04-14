@@ -8,9 +8,9 @@ require_once __DIR__ . "/../init.php";
 
 load_api("login");
 $u = get_user_session();
-if ($u) {
-	header("Location: home.php?ref=login");
+if (!$u) {
+	header("Location: login.php?ref=home");
 	exit(0);
 }
 
-load_view("pages/login");
+load_view("pages/profile", ["u" => $u]);

@@ -12,9 +12,19 @@ require __DIR__."/config.php";
 
 static $session_has_started = false;
 
-function pdo(): PDO
+function create_pdo(): PDO
 {
 	return new PDO(...PDO_PARAM);
+}
+
+function pdo(): PDO
+{
+	static $pdo = NULL;
+
+	if (!$pdo)
+		$pdo = create_pdo();
+
+	return $pdo;
 }
 
 if (!defined("WEB_DONT_START_SESSION")) {

@@ -1,0 +1,24 @@
+/*
+ * SPDX-License-Identifier: GPL-2.0-only
+ *
+ * Copyright (C) 2023  Ammar Faizi <ammarfaizi2@gnuweeb.org>
+ */
+
+#login-box {
+	margin: auto;
+	height: 300px;
+	width: 400px;
+	border: 1px solid #000;
+	text-align: center;
+	margin-top: 200px;
+}
+
+.input-label {
+	display: block;
+	margin: 10px;
+}
+
+.input-field {
+	display: block;
+	margin: 10px;
+}
