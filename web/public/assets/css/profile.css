@@ -1,14 +1,24 @@
+
 #user-photo {
 	height: 300px;
 	width: 300px;
+	border-radius: 50%;
+	object-fit: cover;
 }
+
 #user-info {
 	margin: auto;
 	padding: 30px;
 	text-align: left;
 	border: 1px solid #000;
 }
-#profile-info {
-	text-align: center;
-	padding-bottom: 20px;
+
+#user-info tr th div {
+	font-size: 22px;
+	margin-bottom: 10px;
+}
+
+.edit-profile-link {
+	font-size: 20px;
+	height: 50px;
 }

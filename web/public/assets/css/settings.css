@@ -1,7 +1,11 @@
-#settings-box {
+#set-default {
 	margin: auto;
 	text-align: left;
 	width: 300px;
 	padding: 20px;
 	border: 1px solid #000;
+}
+
+#back-to-menu-box {
+	margin-bottom: 40px;
 }

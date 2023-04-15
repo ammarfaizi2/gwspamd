@@ -6,3 +6,4 @@
 	<script type="text/javascript" src="<?= e(asset("js/router.js")); ?>"></script>
 <?= $head ?? ""; ?>
 </head>
+<body id="gwrouter">

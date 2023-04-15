@@ -33,6 +33,10 @@ function handle_api(string $action): int
 		load_api("login");
 		$ret = handle_api_login_admin();
 		break;
+	case "settings":
+		load_api("settings");
+		$ret = handle_api_settings();
+		break;
 	default:
 		api_error(400, "Invalid \"action\" parameter");
 		return 1;

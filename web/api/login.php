@@ -124,7 +124,8 @@ function handle_api_login_admin(): int
 const GET_USER_SESSION_QUERY = <<<SQL
 	SELECT
 		a.id, a.username, a.first_name, a.last_name, a.email,
-		b.sha1_sum, b.md5_sum, b.ext, a.created_at, a.updated_at
+		a.password, b.sha1_sum, b.md5_sum, b.ext, a.created_at,
+		a.updated_at
 	FROM
 		users AS a LEFT JOIN files AS b ON b.id = a.photo
 	WHERE a.id = ? LIMIT 1;
@@ -148,7 +149,8 @@ function get_user_session(array $extra = []): ?array
 		$r["full_name"] .= " " . $r["last_name"];
 
 	if (isset($r["md5_sum"], $r["sha1_sum"], $r["ext"]))
-		$r["photo"] = bin2hex($r["md5_sum"])."_".$r["sha1_sum"].".".$r["ext"];
+		$r["photo"] = bin2hex($r["md5_sum"])."_".bin2hex($r["sha1_sum"]).".".$r["ext"];
 
+	unset($r["md5_sum"], $r["sha1_sum"], $r["ext"]);
 	return $r;
 }

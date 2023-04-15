@@ -14,11 +14,8 @@ function handle_login(text)
 		return;
 	}
 
-	if ("token" in j) {
-		alert("Login success!");
+	if ("token" in j)
 		window.location.href = "/";
-		return;
-	}
 }
 
 form.addEventListener("submit", function () {
