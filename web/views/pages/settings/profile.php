@@ -25,20 +25,12 @@ if (isset($u["photo"])) {
 </table>
 </form>
 <script>
-	function toggle_all_inputs(enable) {
-		let inputs = document.querySelectorAll("input[type=text], input[type=email], input[type=password]");
-		for (let i = 0; i < inputs.length; i++) {
-			inputs[i].readOnly = !enable;
-			inputs[i].style["background-color"] = (enable ? "white" : "#eee");
-		}
-	}
-
-	let form = gid("edit-profile-form");
-	form.addEventListener("submit", function(e) {
+	let form_profile = gid("edit-profile-form");
+	form_profile.addEventListener("submit", function(e) {
 		e.preventDefault();
 		let xhr = new XMLHttpRequest();
 		xhr.withCredentials = true;
-		xhr.open("POST", form.action, true);
+		xhr.open("POST", form_profile.action, true);
 		xhr.onload = function() {
 			let res;
 
@@ -58,6 +50,6 @@ if (isset($u["photo"])) {
 			}
 		};
 		toggle_all_inputs(false);
-		xhr.send(new FormData(form));
+		xhr.send(new FormData(form_profile));
 	});
 </script>

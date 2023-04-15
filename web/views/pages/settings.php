@@ -9,6 +9,16 @@ const SECTIONS = [
 <link rel="stylesheet" href="<?= e(asset("css/settings.css")); ?>"/>
 <?php load_view("component/navbar"); ?>
 
+<script>
+	function toggle_all_inputs(enable) {
+		let inputs = document.querySelectorAll("input[type=text], input[type=email], input[type=password]");
+		for (let i = 0; i < inputs.length; i++) {
+			inputs[i].readOnly = !enable;
+			inputs[i].style["background-color"] = (enable ? "white" : "#eee");
+		}
+	}
+</script>
+
 <div id="main-box">
 	<h1>Settings</h1>
 	<div id="back-to-menu-box" style="display:none;">

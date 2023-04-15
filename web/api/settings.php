@@ -163,6 +163,76 @@ function handle_api_settings_profile(): int
 	}
 }
 
+function handle_api_settings_password(): int
+{
+	$u = get_user_session();
+	if (!$u) {
+		api_error(401, "Not logged in");
+		return 1;
+	}
+
+	if (!isset($_POST["current_password"]) || !is_string($_POST["current_password"])) {
+		api_error(400, "Missing \"current_password\" string parameter");
+		return 1;
+	}
+
+	if (!isset($_POST["new_password"]) || !is_string($_POST["new_password"])) {
+		api_error(400, "Missing \"new_password\" string parameter");
+		return 1;
+	}
+
+	if (!isset($_POST["confirm_new_password"]) || !is_string($_POST["confirm_new_password"])) {
+		api_error(400, "Missing \"confirm_new_password\" string parameter");
+		return 1;
+	}
+
+	if (!password_verify($_POST["current_password"], $u["password"])) {
+		api_error(400, "Wrong current password");
+		return 1;
+	}
+
+	if ($_POST["new_password"] !== $_POST["confirm_new_password"]) {
+		api_error(400, "New password and confirm new password do not match");
+		return 1;
+	}
+
+	$c = strlen($_POST["new_password"]);
+	if ($c < 6) {
+		api_error(400, "Password must be at least 6 characters long");
+		return 1;
+	}
+
+	if ($c > 512) {
+		api_error(400, "Password cannot be longer than 512 characters");
+		return 1;
+	}
+
+	if ($_POST["new_password"] === $_POST["current_password"]) {
+		api_error(400, "New password cannot be the same as current password");
+		return 1;
+	}
+
+	$q = "UPDATE users SET password = ?, updated_at = ? WHERE id = ? LIMIT 1;";
+
+	try {
+		$pdo = pdo();
+		$pdo->beginTransaction();
+		$st = $pdo->prepare($q);
+		$st->execute([
+			password_hash($_POST["new_password"], PASSWORD_BCRYPT),
+			date("Y-m-d H:i:s"),
+			$u["id"],
+		]);
+		$pdo->commit();
+		api_response(200, ["success" => "Password updated"]);
+		return 0;
+	} catch (PDOException $e) {
+		$pdo->rollBack();
+		api_error(500, "Database error: " . $e->getMessage());
+		return 1;
+	}
+}
+
 function handle_api_settings(): int
 {
 	if (!isset($_GET["section"]) || !is_string($_GET["section"])) {
