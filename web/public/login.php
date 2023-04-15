@@ -13,4 +13,4 @@ if ($u) {
 	exit(0);
 }
 
-load_view("pages/login");
+load_page("login");

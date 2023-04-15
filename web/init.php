@@ -34,12 +34,6 @@ if (!defined("WEB_DONT_START_SESSION")) {
 	}
 }
 
-function load_view(string $name, array $data = [])
-{
-	extract($data);
-	return require VIEWS_DIR . "/{$name}.php";
-}
-
 function load_api(string $name, array $data = [])
 {
 	extract($data);
@@ -110,6 +104,16 @@ function decrypt(string $data, string $key, bool $encode = true): ?string
 		return NULL;
 
 	return openssl_decrypt($ciphertext, $method, $key, OPENSSL_RAW_DATA, $iv);
+}
+
+function load_page(string $name, array $data = [])
+{
+	extract($data);
+	ob_start();
+	require VIEWS_DIR."/pages/{$name}.php";
+	$content = ob_get_clean();
+
+	require VIEWS_DIR."/components/body.php";
 }
 
 endif;

@@ -7,9 +7,11 @@ if (isset($u["photo"])) {
 	$photo = asset("img/default_pp.png");
 }
 
-?><?php load_view("head"); ?>
+$opt["title"] = $u["full_name"];
+
+?>
+
 <link rel="stylesheet" href="<?= e(asset("css/profile.css")); ?>"/>
-<?php load_view("component/navbar"); ?>
 <div id="main-box">
 	<h1><?= e($u["full_name"]); ?></h1>
 	<img id="user-photo" src="<?= e($photo); ?>" alt="<?= e($u["full_name"]); ?>"/>
@@ -23,4 +25,3 @@ if (isset($u["photo"])) {
 		<tr><td>Email</td><td>:</td><td><?= e($u["email"]); ?></td></tr>
 	</table>
 </div>
-<?php load_view("foot"); ?>

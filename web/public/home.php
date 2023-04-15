@@ -13,4 +13,4 @@ if (!$u) {
 	exit(0);
 }
 
-load_view("pages/home", ["u" => $u]);
+load_page("home", ["u" => $u]);

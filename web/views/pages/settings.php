@@ -5,9 +5,15 @@ const SECTIONS = [
 	"password"  => "Change password",
 ];
 
-?><?php load_view("head"); ?>
+if (isset(SECTIONS[$section])) {
+	$opt["title"] = "Settings | ".SECTIONS[$section];
+} else {
+	$opt["title"] = "Settings";
+}
+
+?>
+
 <link rel="stylesheet" href="<?= e(asset("css/settings.css")); ?>"/>
-<?php load_view("component/navbar"); ?>
 
 <script>
 	function toggle_all_inputs(enable) {
@@ -31,7 +37,7 @@ const SECTIONS = [
 	</table>
 	<?php foreach (SECTIONS as $key => $title): ?>
 		<div class="setting-box" style="display:none;" id="set-<?= e($key); ?>">
-		<?php load_view("pages/settings/{$key}", compact("u")); ?>
+		<?php require __DIR__."/settings/{$key}.php"; ?>
 		</div>
 	<?php endforeach; ?>
 </div>
@@ -61,5 +67,3 @@ const SECTIONS = [
 
 	load_section("<?= isset(SECTIONS[$section]) ? $section : "default" ?>");
 </script>
-
-<?php load_view("foot"); ?>

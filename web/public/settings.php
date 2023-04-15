@@ -18,4 +18,4 @@ if (isset($_GET["section"]) && is_string($_GET["section"]))
 else
 	$section = "default";
 
-load_view("pages/settings", ["u" => $u, "section" => $section]);
+load_page("settings", ["u" => $u, "section" => $section]);

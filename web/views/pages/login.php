@@ -1,4 +1,6 @@
-<?php load_view("head"); ?>
+<?php
+$opt["title"] = "Login GWSpamD";
+?>
 <link rel="stylesheet" type="text/css" href="<?= e(asset("css/login.css")); ?>">
 <div id="login-box">
 <h1>Login Page</h1>
@@ -19,5 +21,30 @@
 	<div><button type="submit" id="login-button">Login</button></div>
 </form>
 </div>
-<script type="text/javascript" src="<?= e(asset("js/login.js")); ?>"></script>
-<?php load_view("foot"); ?>
+<script type="text/javascript">
+let form = gid("login-form");
+
+function handle_login(text)
+{
+	let j = JSON.parse(text);
+
+	if ("error" in j) {
+		alert(j.error);
+		return;
+	}
+
+	if ("token" in j)
+		window.location.href = "/";
+}
+
+form.addEventListener("submit", function () {
+	let xhr = new XMLHttpRequest();
+	xhr.useCredentials = true;
+	xhr.open("POST", "/api.php?action=login_user", true);
+	xhr.onreadystatechange = function() {
+		if (this.readyState == 4)
+			handle_login(this.responseText);
+	};
+	xhr.send(new FormData(form));
+});
+</script>
