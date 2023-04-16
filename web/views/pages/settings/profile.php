@@ -1,15 +1,5 @@
-<?php
-
-if (isset($u["photo"])) {
-	load_api("file");
-	$photo = asset("files/".fetch_file_path($u["photo"]));
-} else {
-	$photo = asset("img/default_pp.png");
-}
-
-?>
 <link rel="stylesheet" href="<?= e(asset("css/profile.css")); ?>"/>
-<img id="user-photo" src="<?= e($photo); ?>" alt="<?= e($u["full_name"]); ?>"/>
+<img id="user-photo" src="<?= e($u["photo_path"]); ?>" alt="<?= e($u["full_name"]); ?>"/>
 <form action="api.php?action=settings&amp;section=profile" enctype="multipart/form-data" method="POST" id="edit-profile-form">
 <table id="user-info">
 	<tr><th align="center" colspan="3"><div>Profile Info</div></th></tr>

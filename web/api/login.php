@@ -153,8 +153,13 @@ function get_user_session(array $extra = []): ?array
 	if (isset($r["last_name"]))
 		$r["full_name"] .= " " . $r["last_name"];
 
-	if (isset($r["md5_sum"], $r["sha1_sum"], $r["ext"]))
-		$r["photo"] = bin2hex($r["md5_sum"])."_".bin2hex($r["sha1_sum"]).".".$r["ext"];
+	if (isset($r["md5_sum"], $r["sha1_sum"], $r["ext"])) {
+		load_api("file");
+		$file_name = bin2hex($r["md5_sum"])."_".bin2hex($r["sha1_sum"]).".".$r["ext"];
+		$r["photo_path"] = asset("files/".fetch_file_path($file_name));
+	} else {
+		$r["photo_path"] = asset("img/default_pp.png");
+	}
 
 	unset($r["md5_sum"], $r["sha1_sum"], $r["ext"]);
 	return $r;
