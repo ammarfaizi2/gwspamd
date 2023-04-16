@@ -29,7 +29,7 @@ function pdo(): PDO
 
 if (!defined("WEB_DONT_START_SESSION")) {
 	if (!$session_has_started) {
-		session_start();
+		session_start(['cookie_lifetime' => SESSION_LIFETIME]);
 		$session_has_started = true;
 	}
 }

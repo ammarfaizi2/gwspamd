@@ -26,3 +26,4 @@ define("STORAGE_DIR", __DIR__ . "/storage");
 
 define("BASE_URL", "http" . (isset($_SERVER["HTTPS"]) ? "s" : "") . "://" . $_SERVER["HTTP_HOST"]);
 define("ASSET_BASE_URL", BASE_URL . "/assets");
+define("SESSION_LIFETIME", 3600 * 24 * 5);

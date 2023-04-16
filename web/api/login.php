@@ -43,7 +43,7 @@ function set_token_cookie(int $type, string $token)
 		throw new Exception("Invalid token type {$type}");
 	}
 
-	setcookie($key, $token, time() + 86400 * 30, "/");
+	setcookie($key, $token, time() + SESSION_LIFETIME, "/");
 }
 
 /*
