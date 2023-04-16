@@ -42,6 +42,21 @@ CREATE TABLE `files` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 
+DROP TABLE IF EXISTS `user_audit_logs`;
+CREATE TABLE `user_audit_logs` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int unsigned NOT NULL,
+  `action` enum('login','logout','change_password','edit_profile') COLLATE utf8mb4_unicode_520_ci NOT NULL,
+  `extra` json DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `action` (`action`),
+  KEY `created_at` (`created_at`),
+  CONSTRAINT `user_audit_logs_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+
+
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -67,6 +82,6 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `username`, `email`, `password`, `point`, `photo`, `created_at`, `updated_at`) VALUES
-(1,	'GNU',	'Weeb',	'user',	'user@gnuweeb.org',	'$2y$10$9Nw.S/5FyLB20sn3rg9A3eS8NoXdokLv3YTwKP/8O5cEM8Rq6/CbK',	0,	NULL,	'2023-04-14 23:57:51',	NULL);
+(1,	'GNU',	'Weeb',	'user',	'user@gnuweeb.org',	'$2y$10$nqpwcloZQRK21TzvWAVQpuua595OllpT/6lWB2ICy/0PsblTjVgfi',	0,	NULL,	'2023-04-17 00:47:00',	NULL);
 
--- 2023-04-14 19:26:31
+-- 2023-04-16 17:47:26

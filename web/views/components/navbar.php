@@ -3,6 +3,7 @@
 	<a href="home.php"><button>Home</button></a>
 	<a href="profile.php"><button>Profile</button></a>
 	<a href="settings.php"><button>Settings</button></a>
+	<a href="audit_log.php"><button>Audit Log</button></a>
 	<a href="logout.php"><button>Logout</button></a>
 </div>
 <?php endif; ?>

@@ -1,5 +1,7 @@
 <?php
 
+load_api("audit_log");
+
 function validate_save_profile_inputs(): int
 {
 	if (!isset($_POST["first_name"]) || !is_string($_POST["first_name"])) {
@@ -153,6 +155,13 @@ function handle_api_settings_profile(): int
 			$u["id"],
 		]);
 		$pdo->commit();
+		add_user_audit_log($u["id"], "edit_profile", [
+			"first_name" => $_POST["first_name"],
+			"last_name" => $_POST["last_name"],
+			"username" => $_POST["username"],
+			"email" => $_POST["email"],
+			"photo_id" => $file_id,
+		]);
 		api_response(200, ["success" => "Profile updated"]);
 		return 0;
 	} catch (PDOException $e) {
@@ -222,6 +231,10 @@ function handle_api_settings_password(): int
 			password_hash($_POST["new_password"], PASSWORD_BCRYPT),
 			date("Y-m-d H:i:s"),
 			$u["id"],
+		]);
+		add_user_audit_log($u["id"], "change_password", [
+			"ip" => $_SERVER["REMOTE_ADDR"] ?? NULL,
+			"ua" => $_SERVER["HTTP_USER_AGENT"] ?? NULL,
 		]);
 		$pdo->commit();
 		api_response(200, ["success" => "Password updated"]);

@@ -86,6 +86,11 @@ function handle_api_login_user(): int
 		$_SESSION["user_id"] = $row["id"];
 	}
 
+	load_api("audit_log");
+	add_user_audit_log($row["id"], "login", [
+		"ip" => $_SERVER["REMOTE_ADDR"] ?? NULL,
+		"ua" => $_SERVER["HTTP_USER_AGENT"] ?? NULL,
+	]);
 	api_response(200, ["token" => $token]);
 	return 0;
 }
@@ -125,7 +130,7 @@ const GET_USER_SESSION_QUERY = <<<SQL
 	SELECT
 		a.id, a.username, a.first_name, a.last_name, a.email,
 		a.password, b.sha1_sum, b.md5_sum, b.ext, a.created_at,
-		a.updated_at
+		a.updated_at, b.id AS photo_id
 	FROM
 		users AS a LEFT JOIN files AS b ON b.id = a.photo
 	WHERE a.id = ? LIMIT 1;
