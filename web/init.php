@@ -37,7 +37,7 @@ if (!defined("WEB_DONT_START_SESSION")) {
 function load_api(string $name, array $data = [])
 {
 	extract($data);
-	return require API_DIR . "/{$name}.php";
+	return require_once API_DIR . "/{$name}.php";
 }
 
 function e(?string $str): string
