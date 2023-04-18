@@ -6,38 +6,44 @@ const SECTIONS = [
 ];
 
 if (isset(SECTIONS[$section])) {
-	$opt["title"] = "Settings | ".SECTIONS[$section];
+	$opt["title"] = "Settings | " . SECTIONS[$section];
 } else {
 	$opt["title"] = "Settings";
 }
 
 ?>
 
-<link rel="stylesheet" href="<?= e(asset("css/settings.css")); ?>"/>
 
 <script>
 	function toggle_all_inputs(enable) {
 		let inputs = document.querySelectorAll("input[type=text], input[type=email], input[type=password]");
 		for (let i = 0; i < inputs.length; i++) {
 			inputs[i].readOnly = !enable;
-			inputs[i].style["background-color"] = (enable ? "white" : "#eee");
+			if (!enable)
+				inputs[i].classList.add("disabled");
+			else
+				inputs[i].classList.remove("disabled");
 		}
 	}
 </script>
 
-<div id="main-box">
-	<h1>Settings</h1>
+<div id="main-box" class="content">
+	<h1 class="content-title">Settings</h1>
 	<div id="back-to-menu-box" style="display:none;">
-		<a onclick="load_section_url('default', event);" href="?">Back to settings</a>
+		<a class="btn btn-action" onclick="load_section_url('default', event);" href="?">Back to settings</a>
 	</div>
 	<table style="display:none;" id="set-default">
-	<?php foreach (SECTIONS as $sec => $title): ?>
-		<tr><td><a onclick="load_section_url('<?= $sec; ?>', event);" href="?section=<?= e($sec); ?>"><?= e($title); ?></a></td></tr>
-	<?php endforeach; ?>
+		<?php foreach (SECTIONS as $sec => $title) : ?>
+			<tr>
+				<td>
+					<a class="btn btn-action mt-5" onclick="load_section_url('<?= $sec; ?>', event);" href="?section=<?= e($sec); ?>"><?= e($title); ?></a>
+				</td>
+			</tr>
+		<?php endforeach; ?>
 	</table>
-	<?php foreach (SECTIONS as $key => $title): ?>
+	<?php foreach (SECTIONS as $key => $title) : ?>
 		<div class="setting-box" style="display:none;" id="set-<?= e($key); ?>">
-		<?php require __DIR__."/settings/{$key}.php"; ?>
+			<?php require __DIR__ . "/settings/{$key}.php"; ?>
 		</div>
 	<?php endforeach; ?>
 </div>

@@ -5,7 +5,6 @@
  */
 
 if (!defined("__INIT")):
-
 define("__INIT", true);
 
 require __DIR__."/config.php";
@@ -112,6 +111,7 @@ function load_page(string $name, array $data = [])
 	ob_start();
 	require VIEWS_DIR."/pages/{$name}.php";
 	$content = ob_get_clean();
+	$g_active = $name;
 
 	require VIEWS_DIR."/components/body.php";
 }
