@@ -1,24 +1,21 @@
 <?php
 $opt["title"] = "Login GWSpamD";
 ?>
-<link rel="stylesheet" type="text/css" href="<?= e(asset("css/login.css")); ?>">
-<div id="login-box">
+<div class="card w-full" id="login-box">
 <h1>Login Page</h1>
-<form method="POST" action="javascript:void(0);" id="login-form">
-	<div>
-		<div class="input-label"><label for="username">Username</label></div>
-		<div class="input-field">
-			<input type="text" name="username" placeholder="Username" required/>
-		</div>
-	</div>
-	<div>
-		<div class="input-label"><label for="password">Password</label></div>
-		<div class="input-field">
-			<input type="password" name="password" placeholder="Password" required/>
-			<input type="hidden" name="use_cookie" value="1"/>
-		</div>
-	</div>
-	<div><button type="submit" id="login-button">Login</button></div>
+<form class="form-inline  mw-full" method="POST" action="javascript:void(0);" id="login-form">
+	<div class="form-group">
+	<label class="required w-100" for="username">Username</label>
+	<input type="text" class="form-control" name="username" placeholder="Username" required="required"/>
+</div>
+<div class="form-group">
+	<label class="required w-100" for="password">Password</label>
+	<input type="password" class="form-control pass" name="password" placeholder="Password" required="required"/>
+	<input class="d-none" type="hidden" name="use_cookie" value="1"/>
+</div>
+<div class="form-group">
+	<input type="submit" id="login-button" class="btn btn-primary ml-auto" value="Login">
+</div>
 </form>
 </div>
 <script type="text/javascript">
