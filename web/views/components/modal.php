@@ -26,8 +26,8 @@
             <input type="range" min="1" max="5" value="1" step="0.01" id="photo_range" style="display: none;" />
             <input type="file" id="photo" name="photo" accept=".jpg,.png,.gif,.jpeg" />
             <div class="text-right mt-20">
-                <button type="button" onclick="apply_photo();" data-dismiss="modal-profile" class="btn">Apply photo</button>
-                <button class="btn" data-dismiss="modal-profile">Close</button>
+                <button type="button" onclick="apply_photo();" data-dismiss="modal" class="btn">Apply photo</button>
+                <button class="btn" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
