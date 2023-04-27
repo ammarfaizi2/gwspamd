@@ -1,2 +1,4 @@
 /config.php
 /gwspamd.sql.gz
+*.patch
+*.diff
