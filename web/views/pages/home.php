@@ -129,9 +129,8 @@ ob_start();
                 <table class="table">
                     <?php foreach ($st->fetchAll() as $row) : ?>
                         <tr>
-                            <td><?= e($row["id"]); ?></td>
+                            <td><a href="audit_log.php#log-<?= e($row["id"]); ?>">#<?= e($row["id"]); ?></a></td>
                             <td><?= e($row["action"]); ?></td>
-                            <!-- <td align="left"><?= build_extra_data($row["action"], $row["extra"]); ?></td> -->
                             <td><?= e($row["created_at"]); ?></td>
                         </tr>
                     <?php endforeach; ?>

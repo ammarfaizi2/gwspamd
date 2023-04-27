@@ -42,9 +42,9 @@ $paginator = ob_get_clean();
 	</style>
 	<ol class="activity-feed">
 		<?php foreach ($st->fetchAll() as $row) : ?>
-			<li class="feed-item">
+			<li id="log-<?= e($row["id"]); ?>" class="feed-item">
 				<time class="date" datetime="<?= e($row["created_at"]); ?>"><?= e($row["created_at"]); ?></time>
-				<span class="text"><?= e($row["action"]); ?></span>
+				<span class="text">[<?= e($row["id"]); ?>] <?= e($row["action"]); ?></span>
 				<br>
 				<span class="text">
 					<?= build_extra_data($row["action"], $row["extra"]); ?>
