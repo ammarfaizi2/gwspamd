@@ -26,50 +26,48 @@ if (isset(SECTIONS[$section])) {
 		}
 	}
 </script>
-
-<div id="main-box" class="content">
-	<h1 class="content-title">Settings</h1>
-	<div id="back-to-menu-box" style="display:none;">
-		<a class="btn btn-action" onclick="load_section_url('default', event);" href="?">Back to settings</a>
-	</div>
-	<table style="display:none;" id="set-default">
+<div class="row">
+<div class="col-lg-3">
+	<div class="content">
+		<h2 class="content-title">Settings</h2>
 		<?php foreach (SECTIONS as $sec => $title) : ?>
-			<tr>
-				<td>
-					<a class="btn btn-action mt-5" onclick="load_section_url('<?= $sec; ?>', event);" href="?section=<?= e($sec); ?>"><?= e($title); ?></a>
-				</td>
-			</tr>
+			<a class="btn sidebar-link mt-5 setting-btn" id="btn-<?= e($sec); ?>" onclick="load_section_url('<?= $sec; ?>', event);" href="?section=<?= e($sec); ?>"><?= e($title); ?></a>
 		<?php endforeach; ?>
-	</table>
+	</div>
+</div>
+<div class="col-lg-9">
 	<?php foreach (SECTIONS as $key => $title) : ?>
-		<div class="setting-box" style="display:none;" id="set-<?= e($key); ?>">
+		<div class="content" style="display:none;" id="set-<?= e($key); ?>">
 			<?php require __DIR__ . "/settings/{$key}.php"; ?>
 		</div>
 	<?php endforeach; ?>
 </div>
-
+</div>
 <script>
-	const sections = <?= json_encode(array_merge(array_keys(SECTIONS), ["default"])); ?>;
-	const back = gid("back-to-menu-box");
+	const sections = <?= json_encode(array_keys(SECTIONS)); ?>;
 
 	function hide_all_sections() {
-		back.style.display = "none";
 		for (let i = 0; i < sections.length; i++)
 			gid("set-" + sections[i]).style.display = "none";
+		let settings_btn = document.getElementsByClassName("setting-btn");
+		for (let i = 0; i < sections.length; i++)
+			settings_btn[i].classList.remove("btn-primary");
 	}
 
 	function load_section(section) {
 		hide_all_sections();
 		gid("set-" + section).style.display = "";
-		back.style.display = (section === "default") ? "none" : "";
+		gid("btn-" + section).classList.add("btn-primary");
 	}
 
 	function load_section_url(section, e = null) {
-		if (e !== null)
-			e.preventDefault();
 		load_section(section);
+		if (e !== null) {
+			e.preventDefault();
+			e.target.classList.add("btn-primary");
+		}
 		history.pushState(null, null, "?section=" + section);
 	}
 
-	load_section("<?= isset(SECTIONS[$section]) ? $section : "default" ?>");
+	load_section("<?= isset(SECTIONS[$section]) ? $section : "profile" ?>");
 </script>
