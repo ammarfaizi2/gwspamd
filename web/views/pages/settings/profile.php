@@ -1,53 +1,47 @@
-<div class="mw-full text-center">
-	<button id="photo-btn" type="button" data-toggle="modal" data-target="modal-profile">
-		<img id="user-photo" class="img-fluid rounded-circle" src="<?= e($u["photo_path"]); ?>" alt="<?= e($u["full_name"]); ?>" />
-	</button>
-	<div>
-		<a style="cursor: pointer;" id="photo-btn" type="button" data-toggle="modal" data-target="modal-profile">
-			Edit Photo
-		</a>
+<h2 class="content-title">Update Profile</h2>
+<hr />
+<div class="row">
+	<div class="col-lg-4 order-lg-12">
+		<div class="mw-full text-center">
+			<button id="photo-btn" type="button" data-toggle="modal" data-target="modal-profile">
+				<img id="user-photo" class="img-fluid h-auto rounded-circle" src="<?= e($u["photo_path"]); ?>" alt="<?= e($u["full_name"]); ?>" />
+			</button>
+			<div>
+				<a style="cursor: pointer;" id="photo-btn" type="button" data-toggle="modal" data-target="modal-profile">
+					Edit Photo
+				</a>
+			</div>
+		</div>
 	</div>
-</div>
+	<div class="col-lg-8 order-lg-1">
+		<form class="mw-full" action="api.php?action=settings&amp;section=profile" enctype="multipart/form-data" method="POST" id="edit-profile-form">
+			<div class="form-group">
+		       <label for="first_name">First name</label>
+		       <input type="text" class="form-control" name="first_name" placeholder="<?= e($u["first_name"]); ?>" value="<?= e($u["first_name"]); ?>" required="required">
+		     </div>
+			 <div class="form-group">
+ 		       <label for="last_name">Last name</label>
+ 		       <input type="text" class="form-control" name="last_name" placeholder="<?= e($u["last_name"]); ?>" value="<?= e($u["last_name"]); ?>" required="required">
+ 		     </div>
+			 <div class="form-group">
+ 		       <label for="username">Username</label>
+ 		       <input type="text" class="form-control" name="username" placeholder="<?= e($u["username"]); ?>" value="<?= e($u["username"]); ?>" required="required">
+ 		     </div>
+			 <div class="form-group">
+ 		       <label for="email">Email</label>
+ 		       <input type="email" class="form-control" name="email" placeholder="<?= e($u["email"]); ?>" value="<?= e($u["email"]); ?>" required="required">
+ 		     </div>
+			 <div class="form-group">
+			  <label for="password" class="required">Current password</label>
+			  <input type="password" class="form-control" name="password" placeholder="Current password" required="required">
+			  <div class="form-text">
+				Enter your current password to edit your profile
+			  </div>
+			</div>
+			<input class="btn btn-primary" type="submit" value="Save">
+		</form>
+	</div>
 
-<div class="mw-full d-flex justify-content-center">
-	<form class="w-400 mw-full" action="api.php?action=settings&amp;section=profile" enctype="multipart/form-data" method="POST" id="edit-profile-form">
-		<table class="table " id="user-info">
-			<tr>
-				<th align="center" colspan="3">
-					<div>Profile Info</div>
-				</th>
-			</tr>
-			<tr>
-				<td>User ID</td>
-				<td><?= e($u["id"]); ?></td>
-			</tr>
-			<tr>
-				<td>First Name</td>
-				<td><input class="form-control" type="text" name="first_name" value="<?= e($u["first_name"]); ?>" required /></td>
-			</tr>
-			<tr>
-				<td>Last Name</td>
-				<td><input class="form-control" type="text" name="last_name" value="<?= e($u["last_name"]); ?>" /></td>
-			</tr>
-			<tr>
-				<td>Username</td>
-				<td><input class="form-control" type="text" name="username" value="<?= e($u["username"]); ?>" required /></td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td><input class="form-control" type="email" name="email" value="<?= e($u["email"]); ?>" required /></td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3">
-					<div style="margin-top: 30px;">Enter your current password to edit your profile</div>
-				</td>
-			</tr>
-			<tr>
-				<td align="center" colspan="3"><input class="form-control" type="password" name="password" placeholder="Password" required /></td>
-			</tr>
-		</table>
-		<input class="btn btn-primary btn-block" type="submit" value="Save" />
-	</form>
 </div>
 <script>
 	var apply_photo, form_error;
