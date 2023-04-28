@@ -1,28 +1,21 @@
-<div class="content">
-	<div class="mw-full d-flex justify-content-center">
-		<form action="api.php?action=settings&amp;section=password" method="POST" id="change-pass-form" class="w-400 mw-full form-inline">
-			<table id="user-info" class="table">
-				<tr>
-					<th>
-						<div>Change Password</div>
-					</th>
-				</tr>
-				<tr>
-					<td>Current Password</td>
-					<td><input type="password" class="form-control" name="current_password" placeholder="Current Password" required /></td>
-				</tr>
-				<tr>
-					<td>New Password</td>
-					<td><input type="password" class="form-control" name="new_password" placeholder="New Password" required /></td>
-				</tr>
-				<tr>
-					<td>Confirm New Password</td>
-					<td><input type="password" class="form-control" name="confirm_new_password" placeholder="Confirm New Password" required /></td>
-				</tr>
-			</table>
-			<input class="btn btn-primary btn-block" type="submit" value="Save" />
-		</form>
-	</div>
+<h2 class="content-title">Update Password</h2>
+<hr />
+<div class="mw-full w-400">
+	<form action="api.php?action=settings&amp;section=password" method="POST" id="change-pass-form">
+		<div class="form-group">
+		  <label for="current_password" class="required">Current Password</label>
+		  <input type="password" class="form-control" id="password" name="current_password" placeholder="Current Password" required="required"/>
+		</div>
+		<div class="form-group">
+		  <label for="new_password" class="required">New Password</label>
+		  <input type="password" class="form-control" name="new_password" id="new_password" placeholder="New Password" required="required"/>
+		</div>
+		<div class="form-group">
+		  <label for="confirm_new_password" class="required">Confirm New Password</label>
+		  <input type="password" class="form-control" id="confirm_new_password" name="confirm_new_password" placeholder="Confirm New Password" required="required"/>
+		</div>
+		<input class="btn btn-primary" type="submit" value="Save" />
+	</form>
 </div>
 <script>
 	let form_password = gid("change-pass-form");
@@ -42,10 +35,13 @@
 			}
 
 			if (this.status == 200) {
-				alert("Password updated!");
-				window.location = "?ref=settings";
+				halfmoon.toggleModal('modal-success')
 			} else {
-				alert(res.error || "Unknown error");
+				if (res.error) {
+					toastErorrAlert(res.error);
+				} else {
+					toastErorrAlert("Unknown error");
+				}
 				toggle_all_inputs(true);
 			}
 		};
