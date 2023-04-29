@@ -61,26 +61,6 @@ $show_next_dots = ($last_button < $nr_pages - 1);
 				<a href="?page=<?= $page + 1; ?>" class="page-link">&gt;</a>
 			</li>
 		<?php endif; ?>
-
-
-		<!-- <?php if ($page != 1): ?>
-			<li class="page-item<?= ($page == $i) ? " active" : ""; ?>">
-				<a href="?page=<?= $page - 1; ?>" class="page-link">&lt;</a>
-			</li>
-		<?php endif; ?>
-		<?php if ($show_prev_dots): ?>
-			<li class="page-item ellipsis"></li>
-		<?php endif; ?>
-		<?php for ($i = $start_pg + 1; $i <= $end_pg; $i++) : ?>
-			<li class="page-item<?= ($page == $i) ? " active" : ""; ?>">
-				<a href="?page=<?= $i; ?>" class="page-link"><?= $i; ?></a>
-			</li>
-		<?php endfor; ?>
-		<?php if ($page != $nr_pages): ?>
-			<li class="page-item">
-				<a href="?page=<?= $page + 1; ?>" class="page-link">&gt;</a>
-			</li>
-		<?php endif; ?> -->
 	</ul>
 </nav>
 <?php
