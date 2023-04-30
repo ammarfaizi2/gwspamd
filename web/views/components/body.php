@@ -17,9 +17,7 @@
 		<div class="sticky-alerts"></div>
 		<div class="content-wrapper css-scrollbar-transparent-track">
 			<div class="container-lg">
-				<div class="">
-					<?= $content ?>
-				</div>
+				<?= $content ?>
 			</div>
 		</div>
 	</div>
